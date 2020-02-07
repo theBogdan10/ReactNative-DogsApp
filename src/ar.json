@@ -1,0 +1,23 @@
+{
+    "loginScreen":{
+
+        "title" : "الكلاب",
+        "inputName" : "اسم المستخدم",
+        "inputPassw" : "كلمة السر",
+        "passwForget" : "نسيت كلمة السر؟",
+        "signIn" : "وقع هنا",
+        "signUp" : "سجل",
+        "skipRegistr" : "تخطي تسجيل",
+        "error" : "خطأ",
+        "ok" : "حسنا",
+        "messageError" : "من فضلك ، املأ جميع الحقول أو أدخل القيم الصحيحة!"
+    },
+
+    "mainScreen": {
+
+        "updateTime" : "تحديث الوقت)",
+        "valuePlaceholder" : "القيمة",
+        "exit" : "خروج"
+    } 
+
+}

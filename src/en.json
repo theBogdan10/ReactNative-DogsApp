@@ -1,0 +1,22 @@
+{
+    "loginScreen":{
+
+        "title" : "Dogs",
+        "inputName" : "User name",
+        "inputPassw" : "Password",
+        "passwForget" : "Forgot password ?",
+        "signIn" : "SIGN IN",
+        "signUp" : "SIGN UP",
+        "skipRegistr" : "SKIP REGISTRATION >",
+        "error" : "Error",
+        "ok" : "OK",
+        "messageError" : "Please, fill in all fields or enter correct values !"
+    },
+
+    "mainScreen": {
+        
+        "updateTime" : "Update time (sec)",
+        "valuePlaceholder" : "Value",
+        "exit" : "Exit"
+    } 
+}
