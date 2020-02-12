@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
+
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
   },
-
   input: {
     opacity: 0.3,
     height: 50,
@@ -14,27 +14,22 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.5,
     fontSize: 15,
   },
-
   error: {
     borderBottomColor: 'red'
   },
-
   focus: {
     borderBottomColor: '#00FFFF',
     opacity: 0.6,
   },
-
   unfocus: {
     borderBottomColor: '#EBEDE8',
   },
-
-  frgt: {
+  forgotPassword: {
     marginTop: '10%',
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
   },
-
   text: {
     color: 'white',
     opacity: 0.5,
@@ -58,8 +53,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     opacity: 0.2
   },
-
-
 });
 
 export default styles;

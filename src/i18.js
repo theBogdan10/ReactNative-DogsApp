@@ -1,4 +1,3 @@
-
 import I18n from './index';
 import * as en from './en.json';
 import * as ar from './ar.json';

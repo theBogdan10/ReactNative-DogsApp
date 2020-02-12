@@ -1,76 +1,63 @@
-import React, {useState,useEffect,useRef, useLayoutEffect} from 'react';
-import {TouchableOpacity, Text, TextInput,StyleSheet,Image, View, KeyboardAvoidingView,ScrollView ,Dimensions} from 'react-native' ;
+import React, {useState,useEffect} from 'react';
+import {TouchableOpacity, Text,StyleSheet,Image, View,ScrollView,Slider} from 'react-native' ;
 import I18n from './i18';
 
 
 const MainScreen = (props) =>{
-   
+
   const [value, setValue] = useState(3);
   const [imgUrl,setImgUrl] = useState();
-
   const {navigate} = props.navigation;
+  
+  useEffect( () => {
+    const valueCopy=value;
+    const timer=setInterval(()=>{
+      fetch('https://dog.ceo/api/breeds/image/random')
+        .then( responce => responce.json())
+        .then( data => {
+          setImgUrl(data.message)
+        })
+    },valueCopy*1000)
 
-  const VALUE_REGEX=/^[0-9]|10+$/;
-
-  const {height, width} = Dimensions.get('window');
-
-  const validate = (text) =>{
-    if(VALUE_REGEX.test(text) && text!= ''){
-      setValue(text)
-    }
-    else if(text==''){
-      setValue(3)
-    }
-        else{
-          alert('Error, invalid type')
-        }
-  }
-
-
-  useEffect( ()=>{
-        const valueCopy=value;
-        setTimeout(()=>{
-          fetch('https://dog.ceo/api/breeds/image/random')
-            .then( res => res.json())
-            .then( data => {
-              setImgUrl(data.message)
-            })
-        },valueCopy*1000)
-  },[imgUrl])
+    return ()=>clearInterval(timer);
+  });
     
-
     return(
-      
       <View style={styles.container}>
         <View style={{width:'80%'}}>
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
-        <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={-height/20} >
 
           <View style={{alignItems:'center',marginTop:'20%'}}>
             <Image style={styles.img} source={{uri:`${imgUrl}`}} />
           </View>
 
-            <Text style={styles.updateText}>{I18n.t('mainScreen.updateTime')}</Text>
-            <TextInput placeholder={I18n.t('mainScreen.valuePlaceholder')}
-                     style={styles.input}
-                     value={value}
-                     clearButtonMode={'always'}
-                     onChangeText={(numb)=>validate(numb)} 
-                     maxLength={2}
-                     />
-          </KeyboardAvoidingView>
-                 
+          <Text style={styles.updateText}>{I18n.t('mainScreen.updateTime')}</Text>
+
+          <View style={{alignItems:'center',marginTop:'5%'}}>
+            <Text style={{color:'white',fontSize:17}}>{value}</Text>
+            <Slider
+                    style={{width:'100%',height: 70}}
+                    step={1}
+                    minimumValue={1}
+                    maximumValue={60}
+                    minimumTrackTintColor='#d23366'
+                    maximumTrackTintColor='white'
+                    value={value}
+                    onValueChange={(sliderValue)=>setValue(sliderValue)}        
+            />
+          </View>
+
           <View >
             <TouchableOpacity style={styles.exit} onPress={()=>navigate('Login')} >
               <Text style={{color:'black'}}>{I18n.t('mainScreen.exit')} </Text>
             </TouchableOpacity>
           </View>
+
           </ScrollView>
         </View>
       </View>
-      
     )  
-}
+};
 
 const styles=StyleSheet.create({
   container:{
@@ -78,21 +65,10 @@ const styles=StyleSheet.create({
     alignItems:'center',
     backgroundColor:'#293155',
   },
-  input:{
-    width:'30%',
-    color:'white',
-    marginTop:'10%',
-    borderBottomColor: '#EBEDE8',
-    borderBottomWidth: 1.5,
-    fontSize:17,
-    alignSelf:'center',
-    marginBottom:'15%'
-  },
   img:{
     width:'100%',
     height:350,
     borderRadius:10,
-   
   },
   exit:{
     height:50,
@@ -110,6 +86,6 @@ const styles=StyleSheet.create({
     fontSize:18,
     marginTop:'15%'
   }
-})
+});
 
 export default MainScreen;

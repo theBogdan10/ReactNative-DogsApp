@@ -1,6 +1,5 @@
 {
     "loginScreen":{
-
         "title" : "Dogs",
         "inputName" : "User name",
         "inputPassw" : "Password",
@@ -12,11 +11,8 @@
         "ok" : "OK",
         "messageError" : "Please, fill in all fields or enter correct values !"
     },
-
     "mainScreen": {
-        
         "updateTime" : "Update time (sec)",
-        "valuePlaceholder" : "Value",
         "exit" : "Exit"
     } 
 }
