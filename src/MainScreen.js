@@ -5,7 +5,6 @@ import I18n from './i18';
 import PropTypes from 'prop-types';
 import styles from './mainScreenStyle';
 
-
 const MainScreen = (props) => {
 
 	MainScreen.propTypes = {
@@ -15,25 +14,81 @@ const MainScreen = (props) => {
 	const [value, setValue] = useState(3);
 	const [imgUrl, setImgUrl] = useState();
 	const { navigate } = props.navigation;
+	const [link, setlink] = useState();
+	const [isError, setIsError] = useState(false);
 
-	useEffect(() => {
-		const valueCopy = value;
-		const timer = setInterval(() => {
-			fetch('https://dog.ceo/api/breeds/image/random')
-				.then(responce => responce.json())
+
+	const getImage = () => {
+
+		try {
+			fetch('https://dog.ceo/api/breeds/image/random', { 'cache': 'no-store', headers: { 'Cache-Control': 'no-cache' } })
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					}
+					else {
+						setIsError(true);
+						console.warn('Something went wrong');
+					}
+				}
+				)
 				.then(data => {
+					if (data.message !== imgUrl && link !== data.message) {
+						setImgUrl(data.message);
+						setlink(data.message);
+						setIsError(false);
+					}
+					else {
+						setIsError(true);
+						setImgUrl(undefined);
+					}
+				})
+				.catch((error) => {
+					//console.warn(error);
+					setIsError(true);
 					setImgUrl(data.message);
 				});
-		}, valueCopy * 1000);
+		} catch (error) {
+			console.warn(error);
+			setIsError(true);
+		}
+	};
 
-		return () => clearInterval(timer);
+	useEffect(() => {
+		if (link === imgUrl && isError === false) {
+			getImage();
+		}
+
+		else {
+			console.warn('useEf1 err');
+		}
+	}, []);
+
+	useEffect(() => {
+		if (isError === false || imgUrl !== link) {
+			const timer = setTimeout(getImage, value * 1000);
+			return () => clearTimeout(timer);
+		}
+		else {
+			console.warn('useEf2 err');
+		}
+
+	}, [value, imgUrl]);
+
+	useEffect(() => {
+		if (isError === true) {
+			const timer = setInterval(getImage, value * 1000);
+			return () => clearInterval(timer);
+		}
 	});
+
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.componentWidth}>
-				<ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
+			<ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always' style={styles.scroll}>
+				<View style={styles.componentWidth}>
 					<View style={styles.imageView}>
+						{isError === true ? <View style={styles.errorView}><Text style={styles.networkError}>{I18n.t('mainScreen.networkError')}</Text></View> : null}
 						<Image style={styles.img} source={{ uri: `${imgUrl}` }} />
 					</View>
 					<Text style={styles.updateText}>{I18n.t('mainScreen.updateTime')}</Text>
@@ -51,12 +106,16 @@ const MainScreen = (props) => {
 						/>
 					</View>
 					<View >
-						<TouchableOpacity style={styles.exit} onPress={() => navigate('Login')} >
+						<TouchableOpacity style={styles.exit}
+							onPress={() => {
+								navigate('Login');
+								setImgUrl(undefined);
+							}} >
 							<Text style={styles.exitText}>{I18n.t('mainScreen.exit')} </Text>
 						</TouchableOpacity>
 					</View>
-				</ScrollView>
-			</View>
+				</View>
+			</ScrollView>
 		</View>
 	);
 };

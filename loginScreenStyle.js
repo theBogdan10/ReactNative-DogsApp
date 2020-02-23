@@ -1,18 +1,19 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
+const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',
 		backgroundColor: '#293155',
-		justifyContent: 'center',
+		justifyContent: 'center'
 	},
 	langChoise: {
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
-		marginTop: '15%',
+		marginTop: '16%',
 		alignItems:'center'
 	},
 	english: {
@@ -32,15 +33,16 @@ const styles = StyleSheet.create({
 	},
 	componentWidth:{
 		width:'80%',
+		alignSelf:'center'
 	},
 	logoView:{
 		alignItems: 'center', 
 		marginBottom: '5%', 
-		marginTop: '10%'
+		marginTop: '15%'
 	},
 	logo:{
 		width: '80%', 
-		height: 150
+		height: height/4
 	},
 	skipRegistrView:{
 		alignItems: 'center',
@@ -67,6 +69,10 @@ const styles = StyleSheet.create({
 		height: 30,
         
 	},
+	scroll:{
+		height:'100%',
+		width:'100%'
+	}
 });
 
 

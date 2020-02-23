@@ -1,5 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
 	container: {
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
 	},
 	img: {
 		width: '100%',
-		height: 350,
+		height: height/2,
 		borderRadius: 10,
 	},
 	exit: {
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
 	},
 	componentWidth:{
 		width:'80%',
+		alignSelf:'center'
 	},
 	imageView:{
 		alignItems: 'center',
@@ -50,6 +52,23 @@ const styles = StyleSheet.create({
 	exitText:{
 		color:'black',
 		fontSize:16,
+	},
+	test:{
+		marginTop:'5%'
+	},
+	hidden:{
+		display:'none'
+	},
+	scroll:{
+		height:'100%',
+		width:'100%'
+	},
+	networkError:{
+		color: 'white', 
+		fontSize: 20
+	},
+	errorView:{
+		alignItems:'center',
 	}
 });
 

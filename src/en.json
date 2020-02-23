@@ -12,6 +12,7 @@
     },
     "mainScreen": {
         "updateTime": "Update time (sec)",
-        "exit": "Exit"
+        "exit": "Exit",
+        "networkError": "No connection! Please, check your Internet connection"
     }
 }

@@ -20,10 +20,21 @@ export const UserForm = (props) => {
 	const NAME_REGEX = /^[a-zA-Z]+$/;
 	const PASSWORD_REGEX = /^[a-zA-Z0-9]+$/;
 	const ARABIC_REGEX = /[\u0600-\u06FF]/;
+	const ARABIC_PASSWORD_REGEX = /[\u0600-\u06FF0-9]/;
+	const RUSSIAN_REGEX = /^[а-я]+$/i;
+	const RUSSIAN_PASSWORD_REGEX = /^[а-я0-9]+$/i;
+
+	const errorMessage = () => {
+		Alert.alert(`${I18n.t('loginScreen.error')}`, `${I18n.t('loginScreen.messageError')}`,
+			[
+				{ text: I18n.t('loginScreen.ok') },
+			],
+			{ cancelable: false },
+		);
+	};
 
 	const validaton = () => {
 		switch (props.lang) {
-		case 'ru':
 		case 'en': {
 			if (NAME_REGEX.test(name) && PASSWORD_REGEX.test(passw)) {
 				navigate('Main');
@@ -31,31 +42,31 @@ export const UserForm = (props) => {
 				setPassw('');
 			}
 			else {
-				Alert.alert(`${I18n.t('loginScreen.error')}`, `${I18n.t('loginScreen.messageError')}`,
-					[
-						{ text: I18n.t('loginScreen.ok') },
-					],
-					{ cancelable: false },
-				);
+				errorMessage();
 			}
 		}
 			break;
 		case 'ar': {
-			if ((ARABIC_REGEX.test(name) || NAME_REGEX.test(name)) && (ARABIC_REGEX.test(passw) || PASSWORD_REGEX.test(passw))) {
+			if ((ARABIC_REGEX.test(name) || NAME_REGEX.test(name)) && (ARABIC_PASSWORD_REGEX.test(passw) || PASSWORD_REGEX.test(passw))) {
 				navigate('Main');
 				setName('');
 				setPassw('');
 			}
 			else {
-				Alert.alert(`${I18n.t('loginScreen.error')}`, `${I18n.t('loginScreen.messageError')}`,
-					[
-						{ text: I18n.t('loginScreen.ok') },
-					],
-					{ cancelable: false },
-				);
+				errorMessage();
 			}
 		}
 			break;
+		case 'ru': {
+			if ((RUSSIAN_REGEX.test(name) || NAME_REGEX.test(name)) && (RUSSIAN_PASSWORD_REGEX.test(passw) || PASSWORD_REGEX.test(passw))) {
+				navigate('Main');
+				setName('');
+				setPassw('');
+			}
+			else {
+				errorMessage();
+			}
+		}
 		}
 	};
 
@@ -68,7 +79,7 @@ export const UserForm = (props) => {
 					placeholder={I18n.t('loginScreen.inputName')}
 					onChangeText={(text) => setName(text)}
 					value={name}
-					placeholderTextColor={styles.componentText}
+					placeholderTextColor={'white'}
 					maxLength={40}
 				/>
 				<TextInput secureTextEntry={props.lang === 'ar' ? false : true}
@@ -78,7 +89,7 @@ export const UserForm = (props) => {
 					placeholder={I18n.t('loginScreen.inputPassw')}
 					onChangeText={(text) => setPassw(text)}
 					value={passw}
-					placeholderTextColor={styles.componentText}
+					placeholderTextColor={'white'}
 					maxLength={40}
 				/>
 			</View>
