@@ -21,21 +21,7 @@ for iOS  (only for iOS PC users)  https://docs.expo.io/versions/v36.0.0/workflow
 * User presses the exit button and enters the Login screen.
 * 2 languages ​​are supported - English and Arabic. Switching languages functionality placed ​​on the Login screen.
 ---
-If you ran into following error : **undefined is not an object (evaluating 'RNI18n.getLanguages')**, it means the module couldn't get the default language properly. To fix it, in the file index.js (might be located in node_modules/react-native-i18n/), replace the following lines:
 
-```javascript
-I18nJs.locale = RNI18n.languages[0]; // Line 7  
-export const getLanguages = RNI18n.getLanguages; // Line 12
-```
-
-by
-
-```javascript
-I18nJs.locale = (RNI18n) ? RNI18n.languages[0] : "";
-export const getLanguages = (RNI18n) ? RNI18n.getLanguages : () => {};
-```
-
----
 ### Useful links:  
 * https://facebook.github.io/react-native/
 * https://docs.expo.io/versions/latest/
